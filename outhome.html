@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>place workers</title>
+    <style>
+        header{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        ul {
+            display: flex;
+        }
+
+        ul li {
+            list-style: none;
+            margin-left: 15px;
+        }
+
+        ul li a{
+            text-decoration: none;
+            color: black;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.7s;
+        }
+
+        ul li a:hover{
+            text-decoration: underline;
+        }
+
+        .logo{
+            margin-right: auto;
+            color: rgb(20, 40, 58);
+        }
+
+        .logo img{
+            width: 100px;
+        }
+
+        .srn{
+            margin-top: 7%;
+        }
+
+        .srn input{
+             padding: 10px;
+             width: 100%;
+             border-radius: 8px;
+             border-color: rgba(163, 177, 189, 0.747);
+        }
+
+        .lii{
+            background-color: antiquewhite;
+            padding: 10px;
+            border-radius: 15px;
+            transition: all 0.6s;
+        }
+
+        .lii:hover{
+             background-color: azure;
+        }
+
+        .container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          justify-content: center;
+          margin-top: 10px;
+        }
+
+        .card {
+          background-color: #fff;
+          border-radius: 12px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          width: 300px;
+          overflow: hidden;
+          transition: transform 0.2s;
+        }
+
+        .card:hover {
+          transform: translateY(-8px);
+        }
+
+        .card img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          border-bottom: 1px solid #ddd;
+        }
+
+        .card-content {
+          padding: 15px;
+        }
+
+        .card-content h3 {
+          margin: 0 0 10px;
+          font-size: 18px;
+          color: #333;
+        }
+
+        .card-content p {
+          margin: 0;
+          font-size: 14px;
+          color: #666;
+        }
+
+        button{
+          padding: 10px;
+          border-radius: 19px;
+          border-color: #dddddd2a;
+          transition: all 0.6s;
+        }
+
+        button:hover{
+          background-color: #333;
+          color: #ddd;
+        }
+
+        .login{
+            background-color: #666;
+        }
+
+        .sidebar{
+          position: fixed;
+          top: 0;
+          right: 0;
+          height: 100vh;
+          width: 250px
+          z-index: 999px;
+          background-color: aliceblue;
+          backdrop-filter: blur(10px);
+          box-shadow: 10px 10px 10px rgb(23, 156, 23);
+          display: none;
+          flex-direction: column;
+          align-items: flex-star;
+          justify-content: flex-star;
+          border-radius: 20px;
+        }
+
+        .sidebar li{
+          width: 100%;
+          margin: 10px;
+        }
+
+        
+.shop{
+    box-shadow: 10px 10px 10px ;
+    border-radius: 10px;
+}
+.menu-button{
+    display: none;
+}
+@media(max-width: 800px){
+    .hideOnMobile{
+        display: none;
+    }
+    .menu-button{
+        display: block;
+    }
+}
+
+@media(max-width: 400px){
+    .sidebar{
+        width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+         <div class="logo">
+            <img src="Company employee with a badge_.jpg" alt="">
+            <h1>JOBS</h1>
+         </div>
+
+         
+          <ul>
+            <li class="hideOnMobile"><a href="#">Home</a></li>
+            <li class="hideOnMobile"><a href="about.html">ABOUT</a></li>
+            <li class="hideOnMobile"><a href="login.html" class="login">login</a/li>
+            <li onclick="showsidebar()"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a/li>
+         </ul>
+
+
+         <ul class="sidebar">
+             <li onclick="hidesidebar()"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a/li>
+            <li  ><a href="#">Home</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="login.html" class="login">login</a/li>
+         </ul>
+    </header>
+
+    <search class="srn">
+        <input type="search" id="search" required placeholder="search">
+    </search>
+
+    <div class="container" id="itemsContainer"></div>
+
+    <footer></footer>
+
+    
+
+    <script>
+function showsidebar(){
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.style.display = 'flex'
+}
+
+function hidesidebar(){
+  const sidebar = document.querySelector('.sidebar');
+  sidebar.style.display = 'none'
+}
+    </script>
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQfnVjIm_QDuPtW3z9E1kzco3a-X5fOnw",
+    authDomain: "interviews-908da.firebaseapp.com",
+    projectId: "interviews-908da",
+    storageBucket: "interviews-908da.firebasestorage.app",
+    messagingSenderId: "528499577880",
+    appId: "1:528499577880:web:c27db7b73feb5c64ab9f6d",
+    measurementId: "G-WSH7G344D9"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+
+    <script>
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
+
+      const items = JSON.parse(localStorage.getItem("uploads")) || [];
+      const container = document.getElementById('itemsContainer');
+      const searchInput = document.getElementById('search');
+
+      let followedLinks = JSON.parse(localStorage.getItem("followedLinks")) || [];
+      let followCounts = JSON.parse(localStorage.getItem("followCounts")) || {};
+
+      function displayItems(filteredItems) {
+        container.innerHTML = "";
+        filteredItems.forEach((item, index) => {
+          const uniqueId = btoa(item.title + item.description).substr(0, 12);
+          const count = followCounts[uniqueId] || 0;
+          const alreadyFollowed = followedLinks.includes(item.link);
+          const followButton = alreadyFollowed
+            ? `<a href="${item.link}" target="_blank">Contact 🔗</a>`
+            : `<button onclick="follow('${item.link}', '${uniqueId}', this)">Follow 🔔</button>`;
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${item.image}" alt="Uploaded Image">
+            <div class="card-content">
+              <h3>${item.title}</h3>
+              <p>${item.description}</p>
+              <p><strong>Views:</strong> <span id="views-${uniqueId}">${count}</span></p>
+              ${followButton}
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      function follow(link, id, btn) {
+        if (!followedLinks.includes(link)) {
+          followedLinks.push(link);
+          localStorage.setItem("followedLinks", JSON.stringify(followedLinks));
+
+          followCounts[id] = (followCounts[id] || 0) + 1;
+          localStorage.setItem("followCounts", JSON.stringify(followCounts));
+
+          document.getElementById(`views-${id}`).textContent = followCounts[id];
+          btn.outerHTML = `<a href="${link}" target="_blank">Contact 🔗</a>`;
+        }
+      }
+
+      displayItems(items);
+
+      searchInput.addEventListener('input', () => {
+        const keyword = searchInput.value.toLowerCase();
+        const filtered = items.filter(item =>
+          item.title.toLowerCase().includes(keyword) ||
+          item.description.toLowerCase().includes(keyword)
+        );
+        displayItems(filtered);
+      });
+    </script>
+</body>
+</html>

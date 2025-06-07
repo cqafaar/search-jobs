@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Register</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 5%;
+      background-color: #f7f7f7;
+    }
+
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,0,0,0.2);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    header {
+      max-width: 400px;
+      margin: 0 auto;
+      margin-top: 15%;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    p {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    a {
+      color: blue;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Register Form -->
+  <header id="registerForm" style="display: none;">
+    <h2>Register</h2>
+    <input type="email" id="regEmail" placeholder="Enter email">
+    <input type="password" id="regPassword" placeholder="Enter password">
+    <input type="password" id="confirmPassword" placeholder="Confirm password">
+    <button onclick="register()">Register</button>
+    <p>Already have an account? <a onclick="showLogin()">Login</a></p>
+  </header>
+
+  <!-- Login Form -->
+  <header id="loginForm">
+    <h2>Login</h2>
+    <input type="email" id="loginEmail" placeholder="Enter email">
+    <input type="password" id="loginPassword" placeholder="Enter password">
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <a onclick="showRegister()">Register</a></p>
+  </header>
+
+
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQfnVjIm_QDuPtW3z9E1kzco3a-X5fOnw",
+    authDomain: "interviews-908da.firebaseapp.com",
+    projectId: "interviews-908da",
+    storageBucket: "interviews-908da.firebasestorage.app",
+    messagingSenderId: "528499577880",
+    appId: "1:528499577880:web:c27db7b73feb5c64ab9f6d",
+    measurementId: "G-WSH7G344D9"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+
+
+  <script>
+    function showRegister() {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("registerForm").style.display = "block";
+    }
+
+    function showLogin() {
+      document.getElementById("registerForm").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+    }
+
+    function register() {
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+      if (!email || !password || !confirmPassword) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      const user = { email, password };
+      localStorage.setItem("user", JSON.stringify(user));
+
+      alert("Registered successfully! Please log in.");
+      showLogin();
+    }
+
+    function login() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (!storedUser) {
+        alert("No user registered. Please register first.");
+        return;
+      }
+
+      if (email === storedUser.email && password === storedUser.password) {
+        window.location.href = "home.html";
+      } else {
+        alert("Incorrect email or password.");
+      }
+    }
+  </script>
+</body>
+</html>
